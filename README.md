@@ -48,6 +48,19 @@
  testuser2@example.com <br/>
  testuser3@example.com <br/>
  The password is password"
+ 
+ - Then go to the "jobs" menu, here you can see the jobs and create it.
+ - VueJS frontend, Laravel Backend, passport for auth.
+ 
+ 
+ ## About cache
+ - Im using the package spiritx/lada-cache for caching
+ 
+  ## Features of lada-cache
+ - Automatically caches all database queries
+ - Intelligent cache invalidation with high granularity (created, updated, deleted change the redis database)
+ - The information is getting stored in mysql and redis.
+ - Everytime you ask for a job, its brings the information of redis for faster response
 
 
 ## Information
@@ -381,5 +394,5 @@ apiClient.interceptors.request.use(
           .catch( error => {
               
           });
-  },
+    }
     ```
