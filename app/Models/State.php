@@ -63,7 +63,7 @@ class State
     {
         return self::$labels[$this->value];
     }
-    
+
     public function __toString()
     {
         return $this->value;

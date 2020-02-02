@@ -1,73 +1,74 @@
 <template>
-    <div class="h-screen flex w-full bg-img vx-row no-gutter items-center justify-center" id="page-login">
-        <div class="vx-col sm:w-1/2 md:w-1/2 lg:w-3/4 xl:w-3/5 sm:m-0 m-4">
-            <vx-card>
-                <div slot="no-body" class="full-page-bg-color">
-
-                    <div class="vx-row no-gutter justify-center items-center">
-
-                        <div class="vx-col hidden lg:block lg:w-1/2">
-
-                        </div>
-
-                        <div class="vx-col sm:w-full md:w-full lg:w-1/2 d-theme-dark-bg">
-                            <div class="p-8 login-tabs-container">
-
-                                <div class="vx-card__title mb-4">
-                                    <h4 class="mb-4">Login</h4>
-                                    <p>Bienvenido, porfavor inicie sesión en su cuenta.</p>
+    <v-app id="inspire">
+        <v-content>
+            <v-container
+                class="fill-height"
+                fluid
+            >
+                <v-row
+                    align="center"
+                    justify="center"
+                >
+                    <v-col
+                        cols="12"
+                        sm="8"
+                        md="4"
+                    >
+                        <v-card class="elevation-12">
+                            <v-toolbar
+                                color="primary"
+                                dark
+                                flat
+                            >
+                                <v-toolbar-title>Login form</v-toolbar-title>
+                                <v-spacer />
+                            </v-toolbar>
+                            <v-card-text>
+                                <div class="red" v-if="error">
+                                    <p>{{error.message}}</p>
                                 </div>
+                                <v-form>
+                                    <v-text-field
+                                        label="Login"
+                                        name="login"
+                                        prepend-icon="person"
+                                        type="text"
+                                        v-model="loginDetails.username"
+                                    />
 
-                                <div>
-                                    <vs-input
-                                        name="email"
-                                        icon-no-border
-                                        icon="icon icon-user"
-                                        icon-pack="feather"
-                                        label-placeholder="Email"
-                                        v-model="loginDetails.email"
-                                        class="w-full"/>
-
-                                    <vs-input
-                                        type="password"
+                                    <v-text-field
+                                        id="password"
+                                        label="Password"
                                         name="password"
-                                        icon-no-border
-                                        icon="icon icon-lock"
-                                        icon-pack="feather"
-                                        label-placeholder="Password"
+                                        prepend-icon="lock"
+                                        type="password"
                                         v-model="loginDetails.password"
-                                        class="w-full mt-6" />
-
-                                    <div class="flex flex-wrap justify-between my-5">
-                                        <vs-checkbox v-model="loginDetails.checkbox_remember_me" class="mb-3">Recordarme</vs-checkbox>
-                                        <router-link to="">Olvido su contraseña?</router-link>
-                                    </div>
-
-                                    <vs-button class="float-right" @click="login">Iniciar sesión</vs-button>
-
-                                    <vs-divider>&nbsp;</vs-divider>
-
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </vx-card>
-        </div>
-    </div>
+                                    />
+                                </v-form>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer />
+                                <v-btn color="primary" @click="login">Login</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
-    import axios from "axios";
     import { mapGetters } from "vuex";
     export default{
+        props: {
+            source: String,
+        },
         data() {
             return {
                 loginDetails : {
-                    email: "",
-                    password: "",
+                    username: "joaquin.gamboaf@gmail.com",
+                    password: "password",
                     checkbox_remember_me: false,
                     device_name: "app"
                 }
@@ -78,17 +79,24 @@
         },
         methods: {
             login() {
+                const self = this;
                 this.$store.dispatch("auth/login", this.$data.loginDetails).then((data) => {
-                    this.$store.dispatch("auth/getUser");
-                    this.$router.push(this.$route.query.redirect || "/");
+                    self.$store.dispatch("auth/getUser");
+                    setTimeout(function(){
+                        self.$router.push({ name: 'index'})
+                            .catch((err) => {
+                                console.log(err);
+                            });
+
+                    }, 1000);
+
+
                 }).catch((error) =>{
-                    console.log(error);
-                    console.log(this.$store.state.auth);
+                    //console.log(error);
                 });
             }
         },
         mounted() {
-            //axios.get("airlock/csrf-cookie");
         }
     }
 </script>

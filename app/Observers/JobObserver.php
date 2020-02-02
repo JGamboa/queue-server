@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\JobStateChanged;
 use App\Jobs\CommandJob;
 use App\Models\Job;
 use App\Models\State;
@@ -17,10 +18,9 @@ class JobObserver
      */
     public function created(Job $job)
     {
-        $job->queue_job_id = CommandJob::dispatch($job)->onQueue('high')->delay(now()->addSeconds(15));
+        dispatch(new CommandJob($job))->onQueue('high')->delay(now()->addSeconds(5));
         $job->state = State::PENDING;
         $job->save();
-        Log::info('Job queue id' . $job->queue_job_id);
     }
 
     /**
@@ -31,7 +31,9 @@ class JobObserver
      */
     public function updated(Job $job)
     {
-        //
+        if($job->isDirty('state')){
+            event(new JobStateChanged($job));
+        }
     }
 
     /**

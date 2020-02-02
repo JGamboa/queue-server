@@ -30,5 +30,15 @@ class UsersTableSeeder extends Seeder
         $this->command->info('Here is your test user 2 details to login:');
         $this->command->warn($user->email);
         $this->command->warn('Password is "password"');
+
+        $user = \App\User::create([
+            'name' => 'test user 3',
+            'email' => 'testuser3@example.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $this->command->info('Here is your test user 3 details to login:');
+        $this->command->warn($user->email);
+        $this->command->warn('Password is "password"');
     }
 }

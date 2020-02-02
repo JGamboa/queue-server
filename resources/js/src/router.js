@@ -7,14 +7,42 @@ const router = new Router({
     mode: 'history',
     routes: [
         {
-            path: '/login',
-            name: 'login',
-            component: import('./views/Login.vue'),
+            path: '/',
+            component: () => import('@/layouts/Main.vue'),
+            children: [
+                {
+                    path: '',
+                    name: 'index',
+                    component: () => import('./views/Index.vue'),
+                    meta: { requiresAuth: true}
+                },
+                {
+                    path: 'jobs',
+                    name: 'jobs',
+                    component: () => import('./views/Jobs.vue'),
+                    meta: { requiresAuth: true}
+                },
+            ]
+            //meta: { requiresAuth: true }
         },
         {
-            path: '/404',
-            name: '404',
-            component: import('./views/404.vue'),
+            path: '',
+            component: () => import('@/layouts/FullPage.vue'),
+            children: [
+                // =============================================================================
+                // PAGES
+                // =============================================================================
+                {
+                    path: '/login',
+                    name: 'login',
+                    component: () => import('./views/Login.vue'),
+                },
+                {
+                    path: '/404',
+                    name: 'Error-404',
+                    component: () => import('./views/Error-404.vue'),
+                },
+            ]
         },
         {
             path: '*',

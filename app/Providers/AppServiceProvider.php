@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Job;
+use App\Observers\JobObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobProcessed;
@@ -26,8 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Job::observe(JobObserver::class);
         Queue::before(function (JobProcessing $event) {
-            dd($event);
+
             // $event->connectionName
             // $event->job
             // $event->job->payload()

@@ -19,3 +19,5 @@ storage/*.key
 /.vscode
 /public/js
 /public/css
+/public/fonts
+/public/images

@@ -9,6 +9,7 @@
     <title>{{ config('app.name') }}</title>
     <!-- Styles -->
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 </head>
 <body>
 <div id="app">

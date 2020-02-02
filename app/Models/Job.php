@@ -49,11 +49,11 @@ class Job extends Model
      * @var array
      */
     public static $rules = [
-        'queue_job_id' => 'sometimes|string',
-        'submitter_id' => 'sometimes|integer',
-        'processor_id' => 'sometimes|integer',
-        'command' => 'string',
-        'state' => 'string',
+        'queue_job_id' => 'nullable|sometimes|string',
+        'submitter_id' => 'nullable|sometimes|integer',
+        'processor_id' => 'nullable|sometimes|integer',
+        'command' => 'required|string',
+        'state' => 'nullable|string',
     ];
 
 

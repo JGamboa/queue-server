@@ -1,4 +1,6 @@
 const mix = require('laravel-mix');
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
+//const webpack = require('./webpack.config');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,6 +15,9 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .webpackConfig({
+        plugins: [
+            new VuetifyLoaderPlugin(),
+        ],
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, 'resources/js/src'),
@@ -29,3 +34,25 @@ mix.webpackConfig({
         chunkFilename: 'js/chunks/[name].js',
     }
 });
+
+
+module.exports = {
+    rules: [
+        {
+            test: /\.s(c|a)ss$/,
+            use: [
+                'vue-style-loader',
+                'css-loader',
+                {
+                    loader: 'sass-loader',
+                    // Requires sass-loader@^7.0.0
+                    options: {
+                        implementation: require('sass'),
+                        fiber: require('fibers'),
+                        indentedSyntax: true // optional
+                    },
+                },
+            ],
+        },
+    ],
+}
