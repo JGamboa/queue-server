@@ -14,3 +14,7 @@
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('Job.{id}', function (\App\User $user, $id) {
+    return $user->hasJob($id);
+});

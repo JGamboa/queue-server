@@ -2,13 +2,15 @@
 
 namespace App;
 
+use App\Models\Job;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -36,4 +38,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class, 'submitter_id');
+    }
+
+    public function hasJob($jobId):bool
+    {
+        return $this->jobs()->where('id', $jobId)->exists();
+    }
 }

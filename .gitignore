@@ -17,3 +17,5 @@ storage/*.key
 .phpunit.result.cache
 .idea/*
 /.vscode
+/public/js
+/public/css
